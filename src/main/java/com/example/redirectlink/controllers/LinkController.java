@@ -2,31 +2,22 @@ package com.example.redirectlink.controllers;
 
 import com.example.redirectlink.database.enities.LinkEnity;
 import com.example.redirectlink.database.repositories.LinkRepository;
-import com.example.redirectlink.models.PostResponse;
-import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
-import jakarta.validation.Valid;
-import org.apache.coyote.BadRequestException;
-import org.h2.util.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import services.IdBaseConverter;
+import com.example.redirectlink.services.IdBaseConverter;
 
 import java.net.URI;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 public class LinkController {
-    private final LinkRepository linkRepository;
+    @Autowired
+    private LinkRepository linkRepository;
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -41,24 +32,23 @@ public class LinkController {
         return errors;
     }
 
-    @Autowired
-    public LinkController(LinkRepository linkRepository) {
-        this.linkRepository = linkRepository;
-    }
+//    @Autowired
+//    public LinkController(LinkRepository linkRepository) {
+//        this.linkRepository = linkRepository;
+//    }
 
-    @GetMapping("/link/{id}")
+    @GetMapping("/link/{link_id}")
     public ResponseEntity<Object> getLink(
-            @PathVariable("id") String encodedLinkId
+            @PathVariable("link_id") UUID linkId
     ) {
-        Long linkId = IdBaseConverter.fromBase62ToLong(encodedLinkId);
 
-        System.out.println(linkId);
+//        System.out.println(linkId);
 
-         Optional<LinkEnity> foundLink = linkRepository.findById(linkId);
+         List<LinkEnity> foundLink = linkRepository.findByKeyLinkId(linkId);
 
-        if (foundLink.isPresent()) {
+        if (!foundLink.isEmpty()) {
 
-            URI location = URI.create(foundLink.get().getLink());
+            URI location = URI.create(foundLink.get(0).getLink());
             HttpHeaders headers = new HttpHeaders();
             headers.setLocation(location);
             return new ResponseEntity<Object>(headers, HttpStatus.FOUND);
