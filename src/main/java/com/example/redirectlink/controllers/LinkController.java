@@ -1,7 +1,7 @@
-package com.example.clearLink.controllers;
+package com.example.redirectlink.controllers;
 
-import com.example.clearLink.database.enities.LinkEnity;
-import com.example.clearLink.database.repositories.LinkRepository;
+import com.example.redirectlink.database.enities.LinkEnity;
+import com.example.redirectlink.database.repositories.LinkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import com.example.redirectlink.services.IdBaseConverter;
 
 import java.net.URI;
 import java.util.*;
@@ -43,7 +44,7 @@ public class LinkController {
 
 //        System.out.println(linkId);
 
-         List<LinkEnity> foundLink = linkRepository.findByLinkId(linkId);
+         List<LinkEnity> foundLink = linkRepository.findByKeyLinkId(linkId);
 
         if (!foundLink.isEmpty()) {
 

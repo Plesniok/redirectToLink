@@ -1,4 +1,4 @@
-package com.example.clearLink.models;
+package com.example.redirectlink.models;
 
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyClass;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
