@@ -1,4 +1,4 @@
-package com.example.redirectlink.services;
+package com.example.clearLink.services;
 
 public class IdBaseConverter {
     public static final String baseDigits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";

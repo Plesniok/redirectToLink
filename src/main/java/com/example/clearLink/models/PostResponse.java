@@ -1,4 +1,4 @@
-package com.example.redirectlink.models;
+package com.example.clearLink.models;
 
 public class PostResponse {
     public String id;
